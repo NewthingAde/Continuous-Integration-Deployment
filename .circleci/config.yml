@@ -1,5 +1,4 @@
 version: 2.1
-
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -21,6 +20,7 @@ commands:
               elif [ $input == backend ] 
               then
                 aws cloudformation delete-stack \
+                  --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
               else 
                 aws s3 rm s3://udapeople-123rewqwert --recursive
                 aws cloudformation delete-stack \
@@ -28,11 +28,10 @@ commands:
                 aws cloudformation delete-stack \
                 --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} 
               fi
-
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
-     workflow_id:
+      workflow_id:
         type: string
     steps:
       - run:
@@ -82,7 +81,6 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-
   test-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -140,7 +138,6 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build 
-  
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -183,8 +180,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       
-     - destroy-environment
-
+      - destroy-environment
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
@@ -206,7 +202,6 @@ jobs:
             cd .circleci/ansible/
             cat inventory.txt
       - run:
-
           name: Configure server
           command: |
             cd .circleci/ansible/
@@ -280,13 +275,13 @@ jobs:
           to: "FE"
       - revert-migrations:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-  
   deploy-backend: 
     docker:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
+          
           fingerprints: ["4f:b3:06:5c:a1:7d:55:e4:da:ab:5f:b5:38:b0:fc:0d"]
       - attach_workspace:
           at: ~/
@@ -331,7 +326,7 @@ jobs:
       - run:
           name: Run Ansible
           command: |
-              cd /root/project/.circleci/ansible
+            cd /root/project/.circleci/ansible
               echo "Contents  of the inventory.txt file is _____________________________________>>"
               cat inventory.txt
               ansible-playbook deploy-backend.yml -i inventory.txt
