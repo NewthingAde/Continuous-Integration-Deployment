@@ -80,34 +80,35 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-#  test-frontend:
-#    docker:
-#      - image: circleci/node:13.8.0
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          keys: [frontend-build]
-#      - run:  
-#          name: Test front-end
-#          command: |
-#            cd frontend
-#            sudo apt install nodejs
-#            npm install
-#            npm run test
-#  test-backend:
-#    docker:
-#      - image: circleci/node:13.8.0
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          keys: [backend-build]
-#      - run:  
-#          name: Test back-end
-#          command: |
-#            cd backend
-#            sudo apt install nodejs
-#            npm install
-#            npm run test  
+
+  test-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:  
+          name: Test front-end
+          command: |
+            cd frontend
+            sudo apt install nodejs
+            npm install
+            npm run test
+  test-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:  
+          name: Test back-end
+          command: |
+            cd backend
+            sudo apt install nodejs
+            npm install
+            npm run test  
 #  scan-frontend:
 #    docker:
 #      - image: circleci/node:13.8.0
