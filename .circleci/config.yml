@@ -1,7 +1,6 @@
 version: 2.1
 
 commands:
-
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -15,14 +14,14 @@ commands:
           command: |
               input=<<parameters.to>>
               if [ $input == FE ]   
-             then
+              then
                 aws s3 rm s3://udapeople-123rewqwert --recursive
                 aws cloudformation delete-stack \
                 --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
               elif [ $input == backend ] 
               then
                 aws cloudformation delete-stack \
-             else 
+              else 
                 aws s3 rm s3://udapeople-123rewqwert --recursive
                 aws cloudformation delete-stack \
                 --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
