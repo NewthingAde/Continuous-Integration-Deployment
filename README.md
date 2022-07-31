@@ -1,3 +1,6 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/NewthingAde/Continuous-Integration-Deployment/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/NewthingAde/Continuous-Integration-Deployment/tree/main)
+
+
 # Introduction
 
 Using AWS Cloud-Formation, Ansible and Circle CI tools to design and build complete CI/CD pipelines 
